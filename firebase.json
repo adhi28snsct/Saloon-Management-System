@@ -16,5 +16,16 @@
         "npm --prefix \"$RESOURCE_DIR\" run build"
       ]
     }
-  ]
+  ],
+  "apphosting": {
+    "backendId": "saloon-management-system",
+    "rootDir": "/",
+    "ignore": [
+      "node_modules",
+      ".git",
+      "firebase-debug.log",
+      "firebase-debug.*.log",
+      "functions"
+    ]
+  }
 }

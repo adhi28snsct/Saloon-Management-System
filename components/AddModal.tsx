@@ -21,7 +21,7 @@ type Field = {
 type AddModalProps = {
   title: string;
   fields: Field[];
-  triggerText: string;
+  triggerText: React.ReactNode;
   onSubmit?: (data: Record<string, string>) => void;
 };
 
@@ -53,14 +53,14 @@ export default function AddModal({
     <Dialog open={open} onOpenChange={setOpen}>
       
       {/* ✅ FIXED TRIGGER (NO asChild, NO ERROR) */}
-   <DialogTrigger
-  className="inline-flex items-center justify-center px-4 py-2 rounded-md bg-primary text-white cursor-pointer hover:scale-105 transition"
->
-  {triggerText}
-</DialogTrigger>
+    <DialogTrigger
+      className="inline-flex items-center justify-center px-4 py-2 rounded-md bg-black text-white font-medium shadow-sm hover:bg-gray-800 hover:shadow-md transition-all duration-200 active:scale-95"
+    >
+      {triggerText}
+    </DialogTrigger>
 
       {/* Modal */}
-      <DialogContent className="sm:max-w-md">
+      <DialogContent className="sm:max-w-md bg-white border border-gray-200 rounded-xl shadow-lg">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -88,7 +88,7 @@ export default function AddModal({
             ))}
 
             <Button
-              className="w-full mt-2 transition hover:scale-[1.02]"
+              className="w-full mt-2 bg-black text-white hover:bg-gray-800 rounded-md transition-all shadow-sm active:scale-95 duration-200"
               onClick={handleSubmit}
             >
               Save
