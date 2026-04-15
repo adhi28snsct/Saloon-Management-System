@@ -11,10 +11,11 @@ import { useAuth } from "@/components/AuthContext";
 import { Scissors } from "lucide-react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
+import { toast } from "sonner"; // ✅ ADD THIS
 
 export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false);
-  const { user, loading } = useAuth(); // 👈 IMPORTANT
+  const { user, loading } = useAuth();
   const router = useRouter();
 
   /* ================= BLOCK LOGIN PAGE ================= */
@@ -25,7 +26,6 @@ export default function LoginPage() {
     }
   }, [user, loading, router]);
 
-  // 🔥 STOP RENDERING LOGIN PAGE
   if (loading || user) {
     return null;
   }
@@ -44,12 +44,17 @@ export default function LoginPage() {
 
       if (isNewUser) {
         await createBusiness(user);
+        toast.success("Welcome! Your salon has been created 🎉");
+      } else {
+        toast.success("Welcome back 👋");
       }
 
       router.push("/dashboard");
     } catch (error) {
       console.error("Google Sign-In Error:", error);
-      alert("Login failed. Please try again.");
+
+      // 🔥 REPLACED ALERT
+      toast.error("Login failed. Please try again.");
     } finally {
       setIsLoading(false);
     }
@@ -70,7 +75,7 @@ export default function LoginPage() {
 
         <div className="space-y-2">
           <h1 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-white">
-            SalonDash
+            SaloonOS
           </h1>
           <p className="text-slate-500 dark:text-slate-400">
             Manage your salon appointments, customers, and business.

@@ -4,9 +4,9 @@ import React, { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { db } from "@/lib/firebase";
-import { 
-  Phone, 
-  ChevronRight, 
+import {
+  Phone,
+  ChevronRight,
   Instagram,
   ArrowDown,
   Star,
@@ -16,6 +16,7 @@ import {
   MapPin,
   Clock
 } from "lucide-react";
+import PublicFooter from "@/components/PublicFooter";
 
 export default function PremiumSalonLanding() {
   const params = useParams();
@@ -50,21 +51,21 @@ export default function PremiumSalonLanding() {
 
   return (
     <div className="min-h-screen bg-[#fcfaf7] text-gray-900 selection:bg-stone-200 antialiased font-sans">
-      
+
       {/* 🌫️ CONVERSION-FOCUSED NAVBAR */}
       <nav className="fixed top-0 w-full z-50 bg-[#fcfaf7]/80 backdrop-blur-xl border-b border-stone-200/50">
         <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-          <span className="font-serif text-2xl tracking-tight cursor-pointer" onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}>
+          <span className="font-serif text-2xl tracking-tight cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
             {business.name}
           </span>
           <div className="flex items-center gap-8">
-            <button 
+            <button
               onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}
               className="hidden md:block text-[11px] uppercase tracking-[0.2em] font-bold text-gray-500 hover:text-black transition-colors"
             >
               Services
             </button>
-            <button 
+            <button
               onClick={() => router.push(`/book/${business.slug}`)}
               className="bg-black text-white px-6 py-3 rounded-full text-[11px] uppercase tracking-[0.1em] font-bold hover:bg-stone-800 transition-all shadow-lg active:scale-95"
             >
@@ -77,10 +78,10 @@ export default function PremiumSalonLanding() {
       {/* 🎞️ HIGH-CONVERSION HERO */}
       <section className="relative h-screen w-full flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <img 
-            src={business.coverImage || "https://images.unsplash.com/photo-1560066984-138dadb4c035?q=80&w=1974&auto=format&fit=crop"} 
-            className="w-full h-full object-cover brightness-[0.7]" 
-            alt={business.name} 
+          <img
+            src={business.coverImage || "https://images.unsplash.com/photo-1560066984-138dadb4c035?q=80&w=1974&auto=format&fit=crop"}
+            className="w-full h-full object-cover brightness-[0.7]"
+            alt={business.name}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[#fcfaf7] via-transparent to-black/20" />
         </div>
@@ -92,15 +93,15 @@ export default function PremiumSalonLanding() {
           <p className="text-stone-200 text-lg md:text-2xl font-light mb-12 max-w-2xl mx-auto leading-relaxed">
             Elevated grooming and wellness. Book your session at our {business.city || "private"} studio.
           </p>
-          
+
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <button 
+            <button
               onClick={() => router.push(`/book/${business.slug}`)}
               className="w-full sm:w-auto bg-white text-black px-10 py-5 rounded-full text-xs uppercase tracking-[0.2em] font-bold hover:bg-stone-100 transition-all flex items-center justify-center gap-2"
             >
               <Calendar className="w-4 h-4" /> Book Appointment
             </button>
-            <button 
+            <button
               onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}
               className="w-full sm:w-auto bg-black/30 backdrop-blur-md text-white border border-white/20 px-10 py-5 rounded-full text-xs uppercase tracking-[0.2em] font-bold hover:bg-black/50 transition-all"
             >
@@ -142,8 +143,8 @@ export default function PremiumSalonLanding() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {services.map((service) => (
-              <div 
-                key={service.id} 
+              <div
+                key={service.id}
                 className="group bg-white rounded-[2rem] overflow-hidden border border-stone-100 hover:shadow-2xl transition-all duration-500 cursor-pointer flex flex-col"
                 onClick={() => router.push(`/book/${business.slug}?service=${service.id}`)}
               >
@@ -174,7 +175,7 @@ export default function PremiumSalonLanding() {
       <section className="py-24 bg-stone-900 text-white rounded-[3rem] mx-4 md:mx-10 mb-24 overflow-hidden relative">
         <div className="max-w-7xl mx-auto px-10 grid lg:grid-cols-2 gap-20 relative z-10">
           <div className="space-y-12">
-            <h2 className="text-5xl md:text-7xl font-serif leading-tight">Find us in the <br/><span className="italic text-stone-400">Heart of {business.city || "the City"}.</span></h2>
+            <h2 className="text-5xl md:text-7xl font-serif leading-tight">Find us in the <br /><span className="italic text-stone-400">Heart of {business.city || "the City"}.</span></h2>
             <div className="space-y-8">
               <div className="flex items-start gap-4">
                 <MapPin className="w-6 h-6 text-stone-500 mt-1" />
@@ -198,8 +199,8 @@ export default function PremiumSalonLanding() {
             </div>
           </div>
           <div className="h-[400px] bg-stone-800 rounded-3xl overflow-hidden grayscale hover:grayscale-0 transition-all duration-1000">
-             {/* Mock Map Background */}
-             <div className="w-full h-full bg-[url('https://api.mapbox.com/styles/v1/mapbox/dark-v10/static/pin-s-l+000(0,0)/0,0,1/1000x1000?access_token=YOUR_TOKEN')] bg-cover opacity-50" />
+            {/* Mock Map Background */}
+            <div className="w-full h-full bg-[url('https://api.mapbox.com/styles/v1/mapbox/dark-v10/static/pin-s-l+000(0,0)/0,0,1/1000x1000?access_token=YOUR_TOKEN')] bg-cover opacity-50" />
           </div>
         </div>
       </section>
@@ -207,9 +208,9 @@ export default function PremiumSalonLanding() {
       {/* 🎯 FINAL CTA SECTION */}
       <section className="py-40 text-center px-6">
         <div className="max-w-3xl mx-auto space-y-10 animate-fade-in-up">
-          <h2 className="text-5xl md:text-8xl font-serif leading-none tracking-tighter">Ready for <br/> refinement?</h2>
+          <h2 className="text-5xl md:text-8xl font-serif leading-none tracking-tighter">Ready for <br /> refinement?</h2>
           <p className="text-stone-500 text-lg md:text-xl font-light">Join our list of discerning clients today.</p>
-          <button 
+          <button
             onClick={() => router.push(`/book/${business.slug}`)}
             className="bg-black text-white px-12 py-6 rounded-full text-xs uppercase tracking-[0.3em] font-bold hover:scale-105 transition-transform shadow-2xl active:scale-95"
           >
@@ -220,15 +221,15 @@ export default function PremiumSalonLanding() {
 
       {/* 📱 STICKY MOBILE CTA */}
       <div className="fixed bottom-6 right-6 z-[60] md:hidden">
-        <button 
+        <button
           onClick={() => router.push(`/book/${business.slug}`)}
           className="bg-black text-white px-8 py-5 rounded-full text-[10px] uppercase tracking-[0.2em] font-bold shadow-2xl active:scale-95 flex items-center gap-3"
         >
           <Calendar className="w-4 h-4" /> Book Now
         </button>
       </div>
+      <PublicFooter business={business} />
 
-   
 
       <style jsx global>{`
         @keyframes fade-in-up {

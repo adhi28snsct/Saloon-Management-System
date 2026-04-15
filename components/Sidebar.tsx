@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import {
   LayoutDashboard,
@@ -65,14 +66,28 @@ export function Sidebar() {
   };
 
   return (
-    <aside className="flex h-screen w-64 flex-col border-r border-slate-200 bg-white px-4 py-7 transition-all duration-300 ease-in-out">
-      {/* --- BRANDING --- */}
-      <div className="mb-10 flex items-center gap-3 px-2">
-        <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-slate-950 text-white ring-4 ring-slate-50">
-          <Scissors className="h-5 w-5" strokeWidth={2} />
+    <aside className="flex h-screen w-60 flex-col border-r border-slate-200 bg-white px-4 py-7">
+
+      {/* 🔥 BRANDING SECTION - ICON SIZE BOOSTED */}
+      <div
+        className="mb-12 flex items-center gap-4 px-1 cursor-pointer hover:opacity-80 transition"
+        onClick={() => router.push("/dashboard")}
+      >
+        {/* Container has no H/W limits to allow the image to grow */}
+        <div className="flex shrink-0 items-center justify-center">
+          <Image
+            src="/icon.png" 
+            alt="SalonOS Logo"
+            width={70}  // Forced large width
+            height={70} // Forced large height
+            className="object-contain scale-150 origin-left" // scale-150 makes it huge
+            priority
+          />
         </div>
-        <span className="text-lg font-bold tracking-tight text-slate-900">
-          SalonDash
+
+        {/* Brand Name - Shifted slightly left to balance the larger icon */}
+        <span className="text-2xl font-black tracking-tighter text-slate-900 -ml-2">
+          SalonOS
         </span>
       </div>
 
@@ -85,28 +100,31 @@ export function Sidebar() {
           <nav className="space-y-1">
             {navItems.map((item) => {
               const isActive =
-                pathname === item.href || (pathname === "/" && item.href === "/dashboard");
+                pathname === item.href ||
+                (pathname === "/" && item.href === "/dashboard");
 
               return (
                 <Link
                   key={item.name}
                   href={item.href}
-                  className={`group relative flex items-center justify-between rounded-xl px-3 py-2.5 transition-all duration-200 ${
+                  className={`group relative flex items-center justify-between rounded-xl px-3 py-3 transition-all ${
                     isActive
-                      ? "bg-slate-900 text-white shadow-md shadow-slate-200"
+                      ? "bg-slate-900 text-white shadow-xl scale-[1.02]"
                       : "text-slate-500 hover:bg-slate-50 hover:text-slate-900"
                   }`}
                 >
                   <div className="flex items-center gap-3">
                     <item.icon
-                      className={`h-5 w-5 transition-colors ${
+                      className={`h-5 w-5 ${
                         isActive ? "text-white" : "text-slate-400 group-hover:text-slate-600"
                       }`}
-                      strokeWidth={1.75}
+                      strokeWidth={2.5}
                     />
-                    <span className="text-sm font-medium">{item.name}</span>
+                    <span className="text-sm font-bold">{item.name}</span>
                   </div>
-                  {isActive && <ChevronRight className="h-4 w-4 opacity-50" />}
+                  {isActive && (
+                    <ChevronRight className="h-4 w-4 opacity-70" />
+                  )}
                 </Link>
               );
             })}
@@ -114,46 +132,49 @@ export function Sidebar() {
         </div>
       </div>
 
-      {/* --- FOOTER / USER SECTION --- */}
+      {/* --- FOOTER SECTION --- */}
       <div className="mt-auto flex flex-col gap-4 border-t border-slate-100 pt-6">
+
         {/* User Card */}
-        <div className="group flex items-center gap-3 rounded-2xl border border-slate-50 bg-slate-50/50 p-3 transition-colors hover:border-slate-100">
-          <div className="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white shadow-sm ring-1 ring-slate-200">
-            <UserCircle className="h-6 w-6 text-slate-400" strokeWidth={1.5} />
-            <div className="absolute bottom-0 right-0 h-2.5 w-2.5 rounded-full border-2 border-white bg-emerald-500"></div>
+        <div className="flex items-center gap-3 p-3 rounded-xl bg-slate-50 border border-slate-100">
+          <div className="h-10 w-10 rounded-full bg-slate-200 flex items-center justify-center shrink-0">
+             <UserCircle className="h-8 w-8 text-slate-500" />
           </div>
-          <div className="min-w-0 flex-1 flex flex-col">
-            <span className="truncate text-sm font-bold text-slate-900 capitalize">
-              {userData?.role || "Team Member"}
+          <div className="flex flex-col min-w-0">
+            <span className="text-sm font-bold text-slate-900 capitalize truncate">
+              {userData?.role || "Owner"}
             </span>
             {loading ? (
-              <div className="h-3 w-20 animate-pulse rounded bg-slate-200 mt-1"></div>
+              <div className="h-3 w-20 animate-pulse bg-slate-200 mt-1 rounded"></div>
             ) : (
-              <span className="truncate text-[11px] text-slate-500">
+              <span className="text-[11px] text-slate-500 truncate">
                 {userData?.email}
               </span>
             )}
           </div>
         </div>
 
-        {/* Action Links */}
-        <div className="space-y-1">
-          <Link
-            href="/settings"
-            className="group flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-slate-500 hover:bg-slate-50 hover:text-slate-900 transition-all"
-          >
-            <Settings className="h-5 w-5 text-slate-400 group-hover:rotate-45 transition-transform duration-500" strokeWidth={1.75} />
-            Settings
-          </Link>
+        <nav className="flex flex-col gap-1">
+            <Link
+              href="/settings"
+              className={`flex items-center gap-3 px-3 py-2 text-sm transition rounded-lg ${
+                pathname === "/settings" 
+                ? "bg-slate-100 text-slate-900 font-bold" 
+                : "text-slate-500 hover:bg-slate-50"
+              }`}
+            >
+              <Settings className="h-5 w-5" strokeWidth={2} />
+              Settings
+            </Link>
 
-          <button
-            onClick={handleLogout}
-            className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-rose-500 transition-all hover:bg-rose-50 hover:text-rose-600"
-          >
-            <LogOut className="h-5 w-5" strokeWidth={1.75} />
-            Logout
-          </button>
-        </div>
+            <button
+              onClick={handleLogout}
+              className="flex items-center gap-3 px-3 py-2 text-sm text-red-600 hover:bg-red-50 rounded-lg transition font-bold"
+            >
+              <LogOut className="h-5 w-5" strokeWidth={2} />
+              Logout
+            </button>
+        </nav>
       </div>
     </aside>
   );
