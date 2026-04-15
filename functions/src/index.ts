@@ -13,55 +13,28 @@ export const onBookingCreateSendEmail = onDocumentCreated(
     region: "asia-south1",
   },
   async (event) => {
-    const data = event.data?.data();
-    if (!data) return;
+    if (!event.data) {
+      console.log("No data");
+      return;
+    }
+
+    const data = event.data.data();
 
     try {
-      // 🔥 EMAIL TO SALON OWNER
       await admin.firestore().collection("mail").add({
         to: data.ownerEmail,
         message: {
           subject: "🔥 New Booking Received",
-          html: `
-            <div style="font-family: Arial; max-width: 500px; margin: auto;">
-              <h2 style="color:#16a34a;">SalonFlow</h2>
-              <h3>New Booking Alert 🚨</h3>
-
-              <p><b>Customer:</b> ${data.name}</p>
-              <p><b>Phone:</b> ${data.phone}</p>
-              <p><b>Service:</b> ${data.serviceName}</p>
-              <p><b>Date:</b> ${data.date}</p>
-              <p><b>Time:</b> ${data.startTime}</p>
-
-              <br/>
-              <p style="color:gray;">Respond quickly to convert this lead 🚀</p>
-            </div>
-          `,
+          html: `...`,
         },
       });
 
-      // 🔥 EMAIL TO CUSTOMER
       if (data.email) {
         await admin.firestore().collection("mail").add({
           to: data.email,
           message: {
             subject: "Booking Confirmed 💇‍♂️",
-            html: `
-              <div style="font-family: Arial; max-width: 500px; margin: auto;">
-                <h2 style="color:#16a34a;">SalonFlow</h2>
-                <h3>Booking Confirmed 💇‍♂️</h3>
-
-                <p>Hello ${data.name},</p>
-
-                <div style="background:#f3f4f6; padding:15px; border-radius:8px;">
-                  <p><b>Service:</b> ${data.serviceName}</p>
-                  <p><b>Date:</b> ${data.date}</p>
-                  <p><b>Time:</b> ${data.startTime}</p>
-                </div>
-
-                <p style="margin-top:20px;">We look forward to seeing you!</p>
-              </div>
-            `,
+            html: `...`,
           },
         });
       }
