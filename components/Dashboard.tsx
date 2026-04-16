@@ -7,7 +7,6 @@ import {
   Clock,
   MoreHorizontal,
   Plus,
-  ArrowUpRight,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -40,23 +39,19 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 const statusMap: any = {
   BOOKED: {
     label: "Pending",
-    class:
-      "bg-amber-50 text-amber-700 border-amber-100",
+    class: "bg-amber-100 text-amber-800 border-amber-200",
   },
   ACCEPTED: {
     label: "Confirmed",
-    class:
-      "bg-emerald-50 text-emerald-700 border-emerald-100",
+    class: "bg-emerald-100 text-emerald-800 border-emerald-200",
   },
   COMPLETED: {
     label: "Completed",
-    class:
-      "bg-blue-50 text-blue-700 border-blue-100",
+    class: "bg-blue-100 text-blue-800 border-blue-200",
   },
   CANCELLED: {
     label: "Cancelled",
-    class:
-      "bg-red-50 text-red-600 border-red-100",
+    class: "bg-red-100 text-red-700 border-red-200",
   },
 };
 
@@ -66,8 +61,6 @@ interface DashboardUIProps {
   customersCount: number;
   followUpsCount: number;
   todaysAppointments: any[];
-  search: string;
-  setSearch: (val: string) => void;
 }
 
 export default function DashboardUI({
@@ -78,20 +71,20 @@ export default function DashboardUI({
   todaysAppointments,
 }: DashboardUIProps) {
   return (
-    <div className="flex flex-col gap-10 p-2">
+    <div className="flex flex-col gap-10 p-4">
 
       {/* HEADER */}
       <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
         <div className="space-y-1">
-          <h1 className="text-4xl font-serif tracking-tight text-[#111827]">
+          <h1 className="text-4xl font-serif tracking-tight text-slate-900">
             Overview
           </h1>
-          <p className="text-sm font-medium text-slate-500">
+          <p className="text-sm text-slate-600">
             Manage your salon operations and track growth metrics.
           </p>
         </div>
 
-        <Button className="w-full md:w-auto bg-[#111111] text-white hover:bg-[#111827] shadow-sm rounded-lg px-6">
+        <Button className="w-full md:w-auto bg-black text-white hover:bg-slate-800 rounded-lg px-6">
           <Plus className="mr-2 h-4 w-4" /> New Appointment
         </Button>
       </div>
@@ -102,38 +95,37 @@ export default function DashboardUI({
           label="Total Revenue"
           value={`₹${totalRevenue.toLocaleString()}`}
           description="From completed bookings"
-          icon={<TrendingUp className="h-5 w-5 text-[#6b7280]" />}
-          trend="up"
+          icon={<TrendingUp className="h-5 w-5 text-slate-500" />}
         />
         <StatCard
           label="Total Bookings"
           value={appointments.length.toString()}
           description="All appointments"
-          icon={<Calendar className="h-5 w-5 text-[#6b7280]" />}
+          icon={<Calendar className="h-5 w-5 text-slate-500" />}
         />
         <StatCard
           label="Active Clients"
           value={customersCount.toString()}
           description="Customer database"
-          icon={<Users className="h-5 w-5 text-[#6b7280]" />}
+          icon={<Users className="h-5 w-5 text-slate-500" />}
         />
         <StatCard
           label="Action Required"
           value={followUpsCount.toString()}
           description="Pending follow-ups"
-          icon={<Clock className="h-5 w-5 text-[#6b7280]" />}
+          icon={<Clock className="h-5 w-5 text-slate-500" />}
           highlight={followUpsCount > 0}
         />
       </div>
 
       {/* TODAY'S SCHEDULE */}
-      <Card className="border-[#e5e7eb] bg-white shadow-sm rounded-2xl">
-        <CardHeader className="flex flex-row items-center justify-between border-b bg-[#f8f6f2]/50 pb-4">
+      <Card className="border border-slate-200 bg-white shadow-sm rounded-2xl">
+        <CardHeader className="flex flex-row items-center justify-between border-b bg-slate-50 pb-4">
           <div>
-            <CardTitle className="text-lg font-serif">
+            <CardTitle className="text-lg font-serif text-slate-900">
               Today's Schedule
             </CardTitle>
-            <CardDescription>
+            <CardDescription className="text-slate-600">
               Appointments for today
             </CardDescription>
           </div>
@@ -153,18 +145,18 @@ export default function DashboardUI({
 
         <CardContent className="p-0">
           {todaysAppointments.length === 0 ? (
-            <div className="py-20 text-center text-gray-500">
+            <div className="py-20 text-center text-slate-600">
               No bookings today
             </div>
           ) : (
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Client</TableHead>
-                  <TableHead>Service</TableHead>
-                  <TableHead>Time</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead className="text-right">
+                  <TableHead className="text-slate-700">Client</TableHead>
+                  <TableHead className="text-slate-700">Service</TableHead>
+                  <TableHead className="text-slate-700">Time</TableHead>
+                  <TableHead className="text-slate-700">Status</TableHead>
+                  <TableHead className="text-right text-slate-700">
                     Amount
                   </TableHead>
                 </TableRow>
@@ -173,12 +165,11 @@ export default function DashboardUI({
               <TableBody>
                 {todaysAppointments.map((appt: any) => {
                   const status =
-                    statusMap[appt.status] ||
-                    statusMap["BOOKED"];
+                    statusMap[appt.status] || statusMap["BOOKED"];
 
                   return (
                     <TableRow key={appt.id}>
-                      <TableCell>
+                      <TableCell className="text-slate-800">
                         <div className="flex items-center gap-2">
                           <Avatar>
                             <AvatarFallback>
@@ -189,11 +180,11 @@ export default function DashboardUI({
                         </div>
                       </TableCell>
 
-                      <TableCell>
+                      <TableCell className="text-slate-700">
                         {appt.serviceName || appt.service}
                       </TableCell>
 
-                      <TableCell>
+                      <TableCell className="text-slate-700">
                         {appt.startTime || appt.time}
                       </TableCell>
 
@@ -203,7 +194,7 @@ export default function DashboardUI({
                         </Badge>
                       </TableCell>
 
-                      <TableCell className="text-right">
+                      <TableCell className="text-right text-slate-800">
                         ₹{appt.price || 0}
                       </TableCell>
                     </TableRow>
@@ -226,26 +217,21 @@ function StatCard({
   description,
   icon,
   highlight,
-  trend,
 }: any) {
   return (
     <Card
-      className={`${
-        highlight ? "ring-2 ring-gray-200" : ""
+      className={`bg-white border border-slate-200 rounded-2xl shadow-sm ${
+        highlight ? "ring-2 ring-slate-300" : ""
       }`}
     >
       <CardContent className="p-6">
-        <div className="flex justify-between">
-          <div>
-            <p className="text-xs text-gray-500">
-              {label}
-            </p>
-            <h3 className="text-2xl font-bold">
+        <div className="flex justify-between items-start">
+          <div className="space-y-1">
+            <p className="text-xs text-slate-600">{label}</p>
+            <h3 className="text-2xl font-bold text-slate-900">
               {value}
             </h3>
-            <p className="text-xs text-gray-400">
-              {description}
-            </p>
+            <p className="text-xs text-slate-500">{description}</p>
           </div>
           <div>{icon}</div>
         </div>

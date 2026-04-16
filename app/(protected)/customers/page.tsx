@@ -60,9 +60,9 @@ export default function CustomersPage() {
           <AddModal
             title="Add New Client"
             triggerText={
-              <div className="flex items-center gap-2">
-                <Plus className="w-4 h-4" /> Add Client
-              </div>
+              <Button className="bg-[#111111] hover:bg-[#111827] text-white shadow-sm rounded-lg px-6 active:scale-95 transition-all">
+                <Plus className="w-4 h-4 mr-2" strokeWidth={2} /> Add Client
+              </Button>
             }
             fields={[
               { name: "name", label: "Full Name", placeholder: "Enter name" },
