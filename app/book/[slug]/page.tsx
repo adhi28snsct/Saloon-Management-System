@@ -3,7 +3,7 @@
 import React, { Suspense, useEffect, useState } from "react";
 import { useParams, useSearchParams, useRouter } from "next/navigation";
 import { collection, query, where, getDocs, addDoc } from "firebase/firestore";
-import { db } from "../../../lib/firebase";
+import { db } from "@/lib/firebase";
 import {
   Clock,
   ArrowLeft,
