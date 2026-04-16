@@ -5,7 +5,19 @@ import { onSchedule } from "firebase-functions/v2/scheduler";
 admin.initializeApp();
 
 /* =========================================================
-   🚀 1. BOOKING CREATED → SEND EMAIL
+   🔧 HELPER
+========================================================= */
+const sendMail = async (to: string, subject: string, html: string) => {
+  if (!to) return;
+
+  return admin.firestore().collection("mail").add({
+    to,
+    message: { subject, html },
+  });
+};
+
+/* =========================================================
+   🚀 BOOKING CREATED
 ========================================================= */
 export const onBookingCreateSendEmail = onDocumentCreated(
   {
@@ -13,41 +25,63 @@ export const onBookingCreateSendEmail = onDocumentCreated(
     region: "asia-south1",
   },
   async (event) => {
-    if (!event.data) {
-      console.log("No data");
-      return;
-    }
+    if (!event.data) return;
 
     const data = event.data.data();
 
     try {
-      await admin.firestore().collection("mail").add({
-        to: data.ownerEmail,
-        message: {
-          subject: "🔥 New Booking Received",
-          html: `...`,
-        },
-      });
+      let ownerEmail = data.ownerEmail;
 
-      if (data.email) {
-        await admin.firestore().collection("mail").add({
-          to: data.email,
-          message: {
-            subject: "Booking Confirmed 💇‍♂️",
-            html: `...`,
-          },
-        });
+      if (!ownerEmail && data.businessId) {
+        const businessDoc = await admin
+          .firestore()
+          .collection("businesses")
+          .doc(data.businessId)
+          .get();
+
+        ownerEmail = businessDoc.data()?.email;
       }
 
-      console.log("✅ Booking emails queued");
-    } catch (error) {
-      console.error("❌ Error sending booking email:", error);
+      // OWNER
+      await sendMail(
+        ownerEmail,
+        "🔥 New Booking Received",
+        `
+        <div style="font-family: Arial;">
+          <h2>New Booking 🚀</h2>
+          <p><b>Customer:</b> ${data.name}</p>
+          <p><b>Service:</b> ${data.serviceName}</p>
+          <p><b>Date:</b> ${data.date}</p>
+          <p><b>Time:</b> ${data.startTime}</p>
+        </div>
+        `
+      );
+
+      // CLIENT
+      if (data.email) {
+        await sendMail(
+          data.email,
+          "Booking Confirmed 💇‍♂️",
+          `
+          <div style="font-family: Arial;">
+            <h2>Booking Confirmed</h2>
+            <p>Service: ${data.serviceName}</p>
+            <p>Date: ${data.date}</p>
+            <p>Time: ${data.startTime}</p>
+          </div>
+          `
+        );
+      }
+
+      console.log("✅ Booking emails sent");
+    } catch (err) {
+      console.error(err);
     }
   }
 );
 
 /* =========================================================
-   ⏰ 2. REMINDER (30 MIN BEFORE)
+   ⏰ REMINDER
 ========================================================= */
 export const sendReminderEmails = onSchedule(
   {
@@ -56,8 +90,6 @@ export const sendReminderEmails = onSchedule(
   },
   async () => {
     const now = new Date();
-
-    // ⏰ 30 mins later
     const target = new Date(now.getTime() + 30 * 60000);
 
     const date = target.toISOString().split("T")[0];
@@ -75,41 +107,57 @@ export const sendReminderEmails = onSchedule(
       for (const doc of snapshot.docs) {
         const data = doc.data();
 
-        // 🚫 prevent duplicate reminder
         if (data.reminderSent) continue;
 
-        // 🔥 SEND REMINDER EMAIL TO OWNER
-        await admin.firestore().collection("mail").add({
-          to: data.ownerEmail,
-          message: {
-            subject: "⏰ Appointment in 30 Minutes",
-            html: `
-              <div style="font-family: Arial; max-width: 500px; margin: auto;">
-                <h2 style="color:#f59e0b;">Reminder ⏰</h2>
+        let ownerEmail = data.ownerEmail;
 
-                <p>You have an appointment in 30 minutes</p>
+        if (!ownerEmail && data.businessId) {
+          const businessDoc = await admin
+            .firestore()
+            .collection("businesses")
+            .doc(data.businessId)
+            .get();
 
-                <div style="background:#f3f4f6; padding:15px; border-radius:8px;">
-                  <p><b>Customer:</b> ${data.name}</p>
-                  <p><b>Service:</b> ${data.serviceName}</p>
-                  <p><b>Time:</b> ${data.startTime}</p>
-                </div>
+          ownerEmail = businessDoc.data()?.email;
+        }
 
-                <p style="margin-top:20px;">Be ready to serve your client 💇‍♂️</p>
-              </div>
-            `,
-          },
-        });
+        // OWNER
+        await sendMail(
+          ownerEmail,
+          "⏰ Appointment in 30 Minutes",
+          `
+          <div style="font-family: Arial;">
+            <h2>Reminder ⏰</h2>
+            <p>Customer: ${data.name}</p>
+            <p>Service: ${data.serviceName}</p>
+            <p>Time: ${data.startTime}</p>
+          </div>
+          `
+        );
 
-        // ✅ mark as sent
+        // CLIENT
+        if (data.email) {
+          await sendMail(
+            data.email,
+            "⏰ Your Appointment Reminder",
+            `
+            <div style="font-family: Arial;">
+              <h2>Reminder ⏰</h2>
+              <p>Service: ${data.serviceName}</p>
+              <p>Time: ${data.startTime}</p>
+            </div>
+            `
+          );
+        }
+
         await doc.ref.update({
           reminderSent: true,
         });
       }
 
-      console.log("✅ Reminder check complete");
-    } catch (error) {
-      console.error("❌ Reminder error:", error);
+      console.log("✅ Reminder done");
+    } catch (err) {
+      console.error(err);
     }
   }
 );
