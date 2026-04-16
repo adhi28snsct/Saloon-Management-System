@@ -20,7 +20,8 @@ import PublicFooter from "@/components/PublicFooter";
 
 export default function PremiumSalonLanding() {
   const params = useParams();
-  const slug = params.slug as string;
+ const rawSlug = params.slug;
+const slug = Array.isArray(rawSlug) ? rawSlug[0] : rawSlug;
   const router = useRouter();
 
   const [business, setBusiness] = useState<any>(null);
