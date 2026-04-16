@@ -1,0 +1,122 @@
+
+> saloon@0.1.0 lint
+> eslint
+
+
+C:\Users\adhit\OneDrive\Desktop\saloon\app\(protected)\appointments\page.tsx
+    8:3   warning  'CheckCircle2' is defined but never used  @typescript-eslint/no-unused-vars
+   11:3   warning  'Clock' is defined but never used         @typescript-eslint/no-unused-vars
+   13:3   warning  'ChevronRight' is defined but never used  @typescript-eslint/no-unused-vars
+   26:52  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   33:75  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   40:42  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  155:62  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  158:23  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\adhit\OneDrive\Desktop\saloon\app\(protected)\customers\page.tsx
+    5:10  warning  'Button' is defined but never used        @typescript-eslint/no-unused-vars
+   15:46  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   20:72  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  117:49  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\adhit\OneDrive\Desktop\saloon\app\(protected)\dashboard\page.tsx
+  15:52  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  33:19  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\adhit\OneDrive\Desktop\saloon\app\(protected)\follow-ups\page.tsx
+   8:3  warning  'Clock' is defined but never used     @typescript-eslint/no-unused-vars
+  15:3  warning  'Calendar' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\adhit\OneDrive\Desktop\saloon\app\(protected)\services\page.tsx
+   24:44  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   62:19  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  132:20  warning  'err' is defined but never used           @typescript-eslint/no-unused-vars
+
+C:\Users\adhit\OneDrive\Desktop\saloon\app\book\[slug]\page.tsx
+  17:3   warning  'CreditCard' is defined but never used    @typescript-eslint/no-unused-vars
+  61:44  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  62:44  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  63:58  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\adhit\OneDrive\Desktop\saloon\app\saloon\[slug]\page.tsx
+   27:44  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+   28:44  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+   82:11  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+  153:19  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+C:\Users\adhit\OneDrive\Desktop\saloon\components\BookingForm.tsx
+   8:4   error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  16:32  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  31:32  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  47:32  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\adhit\OneDrive\Desktop\saloon\components\Dashboard.tsx
+   10:3   warning  'ArrowUpRight' is defined but never used                         @typescript-eslint/no-unused-vars
+   40:18  error    Unexpected any. Specify a different type                         @typescript-eslint/no-explicit-any
+   65:17  error    Unexpected any. Specify a different type                         @typescript-eslint/no-explicit-any
+   68:23  error    Unexpected any. Specify a different type                         @typescript-eslint/no-explicit-any
+  134:20  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  174:48  error    Unexpected any. Specify a different type                         @typescript-eslint/no-explicit-any
+  229:3   warning  'trend' is defined but never used                                @typescript-eslint/no-unused-vars
+  230:4   error    Unexpected any. Specify a different type                         @typescript-eslint/no-explicit-any
+
+C:\Users\adhit\OneDrive\Desktop\saloon\components\ProfileModal.tsx
+  33:5  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\adhit\OneDrive\Desktop\saloon\components\ProfileModal.tsx:33:5
+  31 |
+  32 |   useEffect(() => {
+> 33 |     setFormData(business);
+     |     ^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  34 |   }, [business, open]);
+  35 |
+  36 |   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {  react-hooks/set-state-in-effect
+
+C:\Users\adhit\OneDrive\Desktop\saloon\components\PublicFooter.tsx
+  1:52  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\adhit\OneDrive\Desktop\saloon\components\Services.tsx
+   16:4   error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+  121:21  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+  121:21  warning  img elements must have an alt prop, either with meaningful text, or an empty string for decorative images                                                                                                                                                                                jsx-a11y/alt-text
+  156:33  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+  165:23  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+  165:23  warning  img elements must have an alt prop, either with meaningful text, or an empty string for decorative images                                                                                                                                                                                jsx-a11y/alt-text
+
+C:\Users\adhit\OneDrive\Desktop\saloon\components\Sidebar.tsx
+  33:44  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\adhit\OneDrive\Desktop\saloon\functions\lib\index.js
+  37:28  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  38:21  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  39:21  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+C:\Users\adhit\OneDrive\Desktop\saloon\lib\appointment.ts
+  14:69  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  21:17  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  40:12  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  74:60  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\adhit\OneDrive\Desktop\saloon\lib\business.ts
+  11:44  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\adhit\OneDrive\Desktop\saloon\lib\customers.ts
+  16:66  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  23:17  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  40:64  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  59:9   error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\adhit\OneDrive\Desktop\saloon\lib\user.ts
+  5:45  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\adhit\OneDrive\Desktop\saloon\scripts\admin.ts
+  3:24  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+✖ 62 problems (46 errors, 16 warnings)
+

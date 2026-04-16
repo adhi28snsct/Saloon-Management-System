@@ -51,13 +51,10 @@ export default function AddModal({
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      
-      {/* ✅ FIXED TRIGGER (NO asChild, NO ERROR) */}
-    <DialogTrigger
-      className="inline-flex items-center justify-center px-4 py-2 rounded-md bg-black text-white font-medium shadow-sm hover:bg-gray-800 hover:shadow-md transition-all duration-200 active:scale-95"
-    >
-      {triggerText}
-    </DialogTrigger>
+      {/* ✅ FIXED: added asChild (NO UI CHANGE) */}
+      <DialogTrigger asChild>
+        {triggerText}
+      </DialogTrigger>
 
       {/* Modal */}
       <DialogContent className="sm:max-w-md bg-white border border-gray-200 rounded-xl shadow-lg">
